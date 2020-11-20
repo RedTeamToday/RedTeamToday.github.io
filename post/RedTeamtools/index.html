@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>RedTeam(一)基础设施篇-红队工具学习 | 猴子</title>
-<link rel="shortcut icon" href="https://RedTeamToday.github.io/favicon.ico?v=1605870718819">
+<link rel="shortcut icon" href="https://RedTeamToday.github.io/favicon.ico?v=1605891693668">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://RedTeamToday.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="RedTeam(一)基础设施篇-红队工具学习 | 猴子 - Atom Feed" href="https://RedTeamToday.github.io/atom.xml">
@@ -11,17 +11,18 @@
 
 
 
-    <meta name="description" content="Backdoor
-
+    <meta name="description" content="
+Backdoor
 tsh
 C2 远控
 CobaltStrike
-内网穿透
+内网穿透（端口转发、映射、代理
 ew
+icx
 proxychains
 reg
 ..." />
-    <meta name="keywords" content="" />
+    <meta name="keywords" content="RedTeam" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -30,7 +31,7 @@ reg
       <div class="main-content">
         <div class="site-header">
   <a href="https://RedTeamToday.github.io">
-  <img class="avatar" src="https://RedTeamToday.github.io/images/avatar.png?v=1605870718819" alt="">
+  <img class="avatar" src="https://RedTeamToday.github.io/images/avatar.png?v=1605891693668" alt="">
   </a>
   <h1 class="site-title">
     猴子
@@ -94,17 +95,22 @@ reg
                 1 min read
               </span>
               
+                <a href="https://RedTeamToday.github.io/tag/UZyopZ1XN/" class="post-tag">
+                  # RedTeam
+                </a>
+              
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <h1 id="backdoor">Backdoor</h1>
-<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/ifonly-go2019/PicGo//images/20201108134100.jpg" alt="" loading="lazy"></figure>
+                <!-- more -->
+<h1 id="backdoor">Backdoor</h1>
 <h2 id="tsh">tsh</h2>
 <h1 id="c2-远控">C2 远控</h1>
 <h2 id="cobaltstrike">CobaltStrike</h2>
-<h1 id="内网穿透">内网穿透</h1>
+<h1 id="内网穿透端口转发-映射-代理">内网穿透（端口转发、映射、代理</h1>
 <h2 id="ew">ew</h2>
+<h2 id="icx">icx</h2>
 <h2 id="proxychains">proxychains</h2>
 <h2 id="reg">reg</h2>
 
@@ -121,9 +127,10 @@ reg
 <li><a href="#cobaltstrike">CobaltStrike</a></li>
 </ul>
 </li>
-<li><a href="#%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F">内网穿透</a>
+<li><a href="#%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91-%E6%98%A0%E5%B0%84-%E4%BB%A3%E7%90%86">内网穿透（端口转发、映射、代理</a>
 <ul>
 <li><a href="#ew">ew</a></li>
+<li><a href="#icx">icx</a></li>
 <li><a href="#proxychains">proxychains</a></li>
 <li><a href="#reg">reg</a></li>
 </ul>

